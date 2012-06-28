@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
 from git import *
-import pprint
-import os
+from os import getcwd
+import sys
+import re
 
 def get_relevant_entries(log, start_hex, end_hex):
     should_use = False
@@ -54,17 +55,20 @@ def get_user_commit_times(entries, seconds_before_commit):
 
     return commits_by_user
 
-seconds_before_commit = 30 * 60
+if len(sys.argv) != 4:
+    print "Usage: git-estimate-time.py start_hex end_hex seconds_before_commit"
+    exit(1)
 
-repo = Repo(os.getcwd())
+assert re.compile("\d+").match(sys.argv[3])
+
+seconds_before_commit = int(sys.argv[3])
+
+repo = Repo(getcwd())
 assert repo.bare == False
 
 head = repo.head.reference
 
-start_hex = "81c77d116cf417fa91c55b31db5ee176116bf08b"
-end_hex = "ddd73378bbb32ee26fd871df404f05cf361ef821"
-
-relevant_log_entries = get_relevant_entries(head.log(), start_hex, end_hex)
+relevant_log_entries = get_relevant_entries(head.log(), sys.argv[1], sys.argv[2])
 
 assert len(relevant_log_entries) > 0
 

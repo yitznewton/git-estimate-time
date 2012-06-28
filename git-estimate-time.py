@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from os import getcwd, popen
+from os import popen
 import sys
 import re
 from pprint import pprint
@@ -74,7 +74,7 @@ if len(sys.argv) != 4:
     print "Usage: git-estimate-time.py start_hex end_hex seconds_before_commit"
     exit(1)
 
-assert re.compile("\d+").match(sys.argv[3])
+assert re.compile("^\d+$").match(sys.argv[3])
 
 seconds_before_commit = int(sys.argv[3])
 

@@ -7,6 +7,7 @@ from pprint import pprint
 
 def get_relevant_entries(start_hex, end_hex):
     should_use = False
+    is_at_end = False
     entries = []
 
     command = 'git log --reverse --format=format:"%H\t%ae\t%at"'
@@ -28,7 +29,11 @@ def get_relevant_entries(start_hex, end_hex):
             entries.append(matches.groups())
 
         if matches.group(1) == end_hex:
+            is_at_end = True
             break
+
+    if not is_at_end:
+        return []
 
     return entries
 

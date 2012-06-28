@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from git import *
 import pprint
 import os

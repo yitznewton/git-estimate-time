@@ -66,7 +66,13 @@ end_hex = "ddd73378bbb32ee26fd871df404f05cf361ef821"
 
 relevant_log_entries = get_relevant_entries(head.log(), start_hex, end_hex)
 
-pprint.pprint(get_work_time(relevant_log_entries, seconds_before_commit))
-
 assert len(relevant_log_entries) > 0
+
+work_time = get_work_time(relevant_log_entries, seconds_before_commit)
+
+for name, time in work_time.iteritems():
+    print ""
+    print name + ": " + str(time) + " seconds"
+    print name + ": " + str(float(time) / 60) + " minutes"
+    print name + ": " + str(float(time) / 60 / 60) + " hours"
 
